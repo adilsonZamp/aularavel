@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\AlunoRequest;
+use App\Models\Curso;
+use App\Models\Aluno;
 
 class AlunoController extends Controller
 {
@@ -11,7 +13,8 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        //
+        $data = Aluno::all();
+        return view('aluno.index', compact(['data']));
     }
 
     /**
@@ -19,15 +22,20 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        //
+        $cursos = Curso::all();
+        return view('aluno.create', compact(['cursos']));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AlunoRequest $request)
     {
-        //
+        $validacao = $request->validated();
+
+        Aluno::create($validacao);
+
+        return redirect()->route('aluno.index');
     }
 
     /**
@@ -35,7 +43,13 @@ class AlunoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $aluno = Aluno::find($id);
+
+        if (isset($aluno)) {
+            return view('aluno.show', compact(['aluno']));
+        }
+
+        return "<h1>Aluno não encontrado</h1>";
     }
 
     /**
@@ -43,15 +57,29 @@ class AlunoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $aluno = Aluno::find($id);
+        $cursos = Curso::all();
+
+        if (isset($aluno) && isset($cursos)) {
+            return view('aluno.edit', compact(['aluno', 'cursos']));
+        }
+
+        return "<h1>Aluno não encontrado</h1>";
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AlunoRequest $request, string $id)
     {
-        //
+        $aluno = Aluno::find($id);
+
+        if (isset($aluno)) {
+            $aluno->update($request->validated());
+            return redirect()->route('aluno.index');
+        }
+
+        return "<h1>Aluno não encontrado</h1>";
     }
 
     /**
@@ -59,6 +87,13 @@ class AlunoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $aluno = Aluno::find($id);
+
+        if (isset($aluno)) {
+            $aluno->delete();
+            return redirect()->route('aluno.index');
+        }
+
+        return "<h1>Aluno não encontrado</h1>";
     }
 }

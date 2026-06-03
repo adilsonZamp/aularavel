@@ -44,7 +44,7 @@ class AlunoRequest extends FormRequest
          $id = $this->route('aluno');
 
         return [
-            'nome' => "required|max:100|min:8|unique:alunos,nome,{$id}",
+            'nome' => "required|max:100|min:2|unique:alunos,nome,{$id}",
             'turma' => "required",
             'curso_id' => "required|exists:cursos,id",
         ];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Matricula;
 
 class MatriculaController extends Controller
 {
@@ -11,7 +12,8 @@ class MatriculaController extends Controller
      */
     public function index()
     {
-        //
+        $data = Matricula::all();
+        return view('matricula.index', compact(['data']));
     }
 
     /**
@@ -19,7 +21,7 @@ class MatriculaController extends Controller
      */
     public function create()
     {
-        //
+        return view('matricula.create');
     }
 
     /**
@@ -27,7 +29,12 @@ class MatriculaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $matricula = new Matricula();
+        $matricula->aluno_id = $request->aluno_id;
+        $matricula->curso_id = $request->curso_id;
+        $matricula->save();
+
+        return redirect()->route('matricula.index');
     }
 
     /**
@@ -35,7 +42,13 @@ class MatriculaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $matricula = Matricula::find($id);
+
+        if (isset($matricula)) {
+            return redirect()->route('matricula.index');
+        }
+
+        return "<h1>Matricula não encontrada</h1>";
     }
 
     /**
@@ -43,7 +56,13 @@ class MatriculaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $matricula = Matricula::find($id);
+
+        if (isset($matricula)) {
+            return redirect()->route('matricula.index');
+        }
+
+        return "<h1>Matricula não encontrada</h1>";
     }
 
     /**
@@ -51,7 +70,17 @@ class MatriculaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $matricula = Matricula::find($id);
+
+        if (isset($matricula)) {
+            $matricula->aluno_id = $request->aluno_id;
+            $matricula->curso_id = $request->curso_id;
+            $matricula->save();
+
+            return redirect()->route('matricula.index');
+        }
+
+        return "<h1>Matricula não encontrada</h1>";
     }
 
     /**
@@ -59,6 +88,13 @@ class MatriculaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $matricula = Matricula::find($id);
+
+        if (isset($matricula)) {
+            $matricula->delete();
+            return redirect()->route('matricula.index');
+        }
+
+        return "<h1>Matricula não encontrada</h1>";
     }
 }
