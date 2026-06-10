@@ -87,7 +87,12 @@ class DisciplinaController extends Controller
         $disciplina = Disciplina::find($id);
 
         if(isset($disciplina)) {
-            $disciplina->delete();
+            try {
+                $disciplina->delete();
+            } catch (\Throwable $th) {
+                $erro = 'Não é possível deletar a disciplina ' . $disciplina->nome . ' pois ela tem matriculas ativas';
+                return redirect()->route('disciplina.index')->with('erro', $erro);
+            }
             return redirect()->route('disciplina.index');
         }
 

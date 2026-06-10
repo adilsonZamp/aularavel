@@ -91,7 +91,11 @@ class MatriculaController extends Controller
         $matricula = Matricula::find($id);
 
         if (isset($matricula)) {
-            $matricula->delete();
+            try {
+                $matricula->delete();
+            } catch (\Throwable $th) {
+                return view('matricula.index');
+            }
             return redirect()->route('matricula.index');
         }
 

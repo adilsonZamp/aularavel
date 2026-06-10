@@ -7,7 +7,6 @@ use \Illuminate\Database\Eloquent\SoftDeletes;
 
 class Disciplina extends Model
 {
-
     protected $fillable = [
         'nome',
         'carga_horaria',

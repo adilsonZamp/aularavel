@@ -7,6 +7,10 @@
 )
 @section('conteudo')
 
+    @if (session('erro'))
+        <span>{{ session('erro') }}</span>
+    @endif
+
     <table class="table align-middle caption-top table-striped">
         <thead>
             <th class="text-secondary">NOME</th>

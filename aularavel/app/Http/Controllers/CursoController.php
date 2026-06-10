@@ -87,7 +87,8 @@ class CursoController extends Controller
             try {
                 $curso->delete();
             } catch (\Throwable $th) {
-                redirect()->route('curso.index');
+                $erro = 'Não é possível deletar o curso ' . $curso->nome . ' pois ele tem disciplinas cadastradas';
+                return redirect()->route('curso.index')->with('erro', $erro);
             }
             return redirect()->route('curso.index');
         }

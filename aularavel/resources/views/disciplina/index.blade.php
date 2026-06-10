@@ -8,6 +8,9 @@
 @section('conteudo')
 
     <table class="table align-middle caption-top table-striped">
+        @if (session('erro'))
+            <span>{{session('erro')}}</span>
+        @endif
         <thead>
             <th class="text-secondary">NOME</th>
             <th class="d-none d-md-table-cell text-secondary">CARGA HORÁRIA</th>
