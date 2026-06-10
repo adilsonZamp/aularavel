@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Aluno;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class AlunoRequest extends FormRequest
+class AlunoUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -44,9 +44,7 @@ class AlunoRequest extends FormRequest
          $id = $this->route('aluno');
 
         return [
-            'nome' => "required|max:100|min:2|unique:alunos,nome,{$id}",
-            'turma' => "required",
-            'curso_id' => "required|exists:cursos,id",
+            'nome' => "required|max:100|min:2"
         ];
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AlunoRequest;
+use App\Http\Requests\Aluno\AlunoCreateRequest;
+use App\Http\Requests\Aluno\AlunoUpdateRequest;
 use App\Models\Curso;
 use App\Models\Aluno;
 
@@ -29,10 +30,9 @@ class AlunoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AlunoRequest $request)
+    public function store(AlunoCreateRequest $request)
     {
         $validacao = $request->validated();
-
         Aluno::create($validacao);
 
         return redirect()->route('aluno.index');
@@ -70,7 +70,7 @@ class AlunoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AlunoRequest $request, string $id)
+    public function update(AlunoUpdateRequest $request, string $id)
     {
         $aluno = Aluno::find($id);
 
