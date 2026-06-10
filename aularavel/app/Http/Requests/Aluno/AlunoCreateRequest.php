@@ -31,6 +31,8 @@ class AlunoCreateRequest extends FormRequest
             "max" => "Este campo possui tamanho máximo de [:max] caracteres!",
             "min" => "Este campo possui tamanho mínimo de [:min] caracteres!",
             "nome.unique" => "Já existe um aluno cadastrado com este nome!",
+            "integer" => "Esse campo deve ser um número",
+            "digits" => "Digite um ano com [:digits] dígitos",
         ];
     }
 
@@ -45,7 +47,7 @@ class AlunoCreateRequest extends FormRequest
 
         return [
             'nome' => "required|max:100|min:2",
-            'turma' => "required",
+            'turma' => "required|integer|digits:4",
             'curso_id' => "required|exists:cursos,id",
         ];
     }

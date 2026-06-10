@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->integer('carga_horaria');
             $table->unsignedBigInteger('curso_id');
-            $table->foreign('curso_id')->references('id')->on('cursos');
-            $table->softDeletes();
+            $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('restrict');
             $table->timestamps();
         });
     }

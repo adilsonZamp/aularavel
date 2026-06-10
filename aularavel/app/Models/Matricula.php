@@ -12,10 +12,10 @@ class Matricula extends Model
     ];
 
     public function disciplina() {
-        return $this->belongsTo('\App\Models\Disciplina');
+        return $this->belongsTo(Disciplina::class);
     }
 
     public function aluno() {
-        return $this->belongsTo('\App\Models\Aluno');
+        return $this->belongsTo(Aluno::class);
     }
 }

@@ -12,8 +12,8 @@ class MatriculaController extends Controller
      */
     public function index()
     {
-        $data = Matricula::all();
-        return view('matricula.index', compact(['data']));
+        $matriculas = Matricula::with(['disciplina', 'aluno'])->get();
+        return view('matricula.index', compact(['matriculas']));
     }
 
     /**

@@ -84,7 +84,11 @@ class CursoController extends Controller
         $curso = Curso::find($id);
 
         if(isset($curso)) {
-            $curso->delete();
+            try {
+                $curso->delete();
+            } catch (\Throwable $th) {
+                redirect()->route('curso.index');
+            }
             return redirect()->route('curso.index');
         }
 

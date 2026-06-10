@@ -90,7 +90,11 @@ class AlunoController extends Controller
         $aluno = Aluno::find($id);
 
         if (isset($aluno)) {
-            $aluno->delete();
+            try {
+                $aluno->delete();
+            } catch (\Throwable $th) {
+                return redirect()->route('aluno.index')->with('erro', 'Existem matrículas que dependem desse aluno, para desinscrever ele é necessário revogar as matrículas');
+            }
             return redirect()->route('aluno.index');
         }
 
