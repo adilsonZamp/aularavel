@@ -1,28 +1,27 @@
 @extends('template/main',
     [
         'titulo'=>"Sistema Aula",
-        'cabecalho' => 'Nova Disciplina',
+        'cabecalho' => 'Nova Matrícula',
         'rota' => '',
     ]
 )
 @section('conteudo')
-    <form action="{{route('disciplina.store')}}" method="POST">
+    <form action="{{route('matricula.store')}}" method="POST">
         @csrf
         <div class="row">
             <div class="col" >
                 <div class="form-floating mb-3">
-                    <input
-                        type="text"
-                        class="form-control @error('nome') is-invalid @enderror"
-                        name="nome"
-                        placeholder="Nome"
-                        value="{{old('nome')}}"
-                    />
-                    <label for="nome">Nome</label>
+                    <label for="aluno">Aluno</label>
+                    <br><br>
+                    <select name="aluno" id="aluno" class="form-control @error('aluno') is-invalid @enderror">
+                        @foreach ($alunos as $aluno)
+                            <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
+                        @endforeach
+                    </select>
 
-                    @if($errors->has('nome'))
+                    @if($errors->has('aluno'))
                         <div class='invalid-feedback'>
-                            {{ $errors->first('nome') }}
+                            {{ $errors->first('aluno') }}
                         </div>
                     @endif
                 </div>
@@ -31,40 +30,17 @@
         <div class="row">
             <div class="col" >
                 <div class="form-floating mb-3">
-                    <input
-                        type="number"
-                        class="form-control @error('carga_horaria') is-invalid @enderror"
-                        name="carga_horaria"
-                        placeholder="Carga Horária"
-                        value="{{old('carga_horaria')}}"
-                    />
-                    <label for="carga_horaria">Carga Horária</label>
-
-                    @if($errors->has('carga_horaria'))
-                        <div class='invalid-feedback'>
-                            {{ $errors->first('carga_horaria') }}
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-secondary text-white">Curso</span>
-                    <select
-                        name="curso_id"
-                        class="form-select form-control input-required @error('curso_id') is-invalid @enderror"
-                    >
-                        @foreach ($cursos as $item)
-                            <option value="{{$item->id}}" @if($item->id == old('curso_id')) selected="true" @endif>
-                                {{ $item->nome }}
-                            </option>
+                    <label for="disciplina">Disciplina</label>
+                    <br><br>
+                    <select name="disciplina" id="disciplina" class="form-control @error('disciplina') is-invalid @enderror">
+                        @foreach ($disciplinas as $disciplina)
+                            <option value="{{ $disciplina->id }}">{{ $disciplina->nome }}</option>
                         @endforeach
                     </select>
-                    @if($errors->has('curso_id'))
+
+                    @if($errors->has('disciplina'))
                         <div class='invalid-feedback'>
-                            {{ $errors->first('curso_id') }}
+                            {{ $errors->first('disciplina') }}
                         </div>
                     @endif
                 </div>
@@ -73,7 +49,7 @@
 
         <div class="row mb-5">
             <div class="col">
-                <a href="{{route('disciplina.index')}}" class="btn btn-secondary btn-block align-content-center">
+                <a href="{{route('matricula.index')}}" class="btn btn-secondary btn-block align-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
                         <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
                     </svg>

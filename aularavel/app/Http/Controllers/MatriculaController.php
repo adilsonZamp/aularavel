@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
+use App\Models\Disciplina;
 use Illuminate\Http\Request;
 use App\Models\Matricula;
 
@@ -21,7 +23,10 @@ class MatriculaController extends Controller
      */
     public function create()
     {
-        return view('matricula.create');
+        $alunos = Aluno::all();
+        $disciplinas = Disciplina::all();
+
+        return view('matricula.create', compact(['disciplinas', 'alunos']));
     }
 
     /**
@@ -30,8 +35,8 @@ class MatriculaController extends Controller
     public function store(Request $request)
     {
         $matricula = new Matricula();
-        $matricula->aluno_id = $request->aluno_id;
-        $matricula->curso_id = $request->curso_id;
+        $matricula->aluno_id = $request->aluno;
+        $matricula->disciplina_id = $request->disciplina;
         $matricula->save();
 
         return redirect()->route('matricula.index');
@@ -42,6 +47,7 @@ class MatriculaController extends Controller
      */
     public function show(string $id)
     {
+        dd('sem uso');
         $matricula = Matricula::find($id);
 
         if (isset($matricula)) {
@@ -56,6 +62,7 @@ class MatriculaController extends Controller
      */
     public function edit(string $id)
     {
+        dd('sem uso');
         $matricula = Matricula::find($id);
 
         if (isset($matricula)) {
@@ -70,6 +77,7 @@ class MatriculaController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        dd('sem uso');
         $matricula = Matricula::find($id);
 
         if (isset($matricula)) {
@@ -86,19 +94,13 @@ class MatriculaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $idAluno, int $idDisciplina)
     {
-        $matricula = Matricula::find($id);
-
-        if (isset($matricula)) {
-            try {
-                $matricula->delete();
-            } catch (\Throwable $th) {
-                return view('matricula.index');
-            }
+        try {
+            Matricula::where('disciplina_id', $idDisciplina)->where('aluno_id', $idAluno)->delete();
+        } catch (\Throwable $th) {
             return redirect()->route('matricula.index');
         }
-
-        return "<h1>Matricula não encontrada</h1>";
+        return redirect()->route('matricula.index');
     }
 }

@@ -13,14 +13,12 @@
 
     <table class="table align-middle caption-top table-striped">
         <thead>
-            <th class="text-secondary">ID</th>
             <th class="d-none d-md-table-cell text-secondary">NOME</th>
             <th class="text-secondary">AÇÕES</th>
         </thead>
         <tbody>
             @foreach ($data as $aluno)
                 <tr>
-                    <td>{{ $aluno->id }}</td>
                     <td class="d-none d-md-table-cell">{{ $aluno->nome }}</td>
                     <td>
                         <a href="{{route('aluno.edit', $aluno->id)}}" class="btn btn-sm btn-primary">
