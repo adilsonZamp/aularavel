@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use App\Events\AuthenticationEvent;
 
 class RegisteredUserController extends Controller
 {
@@ -46,6 +47,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // Registra o Evento de Autenticação - Permissão
+        event(new AuthenticationEvent(Auth::user()->role_id));
+        
         return redirect(route('home', absolute: false));
     }
 }

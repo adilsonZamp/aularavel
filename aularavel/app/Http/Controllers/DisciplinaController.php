@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Disciplina;
 use App\Models\Curso;
 use App\Http\Requests\DisciplinaRequest;
+use Illuminate\Support\Facades\Gate;
 
 class DisciplinaController extends Controller
 {
@@ -13,6 +14,8 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Disciplina::class);
+
         $data = Disciplina::with(['curso'])->orderBy('nome')->get();
         return view('disciplina.index', compact(['data']));
     }
@@ -22,6 +25,7 @@ class DisciplinaController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Disciplina::class);
         $cursos = Curso::all();
         return view('disciplina.create', compact(['cursos']));
     }
@@ -31,6 +35,7 @@ class DisciplinaController extends Controller
      */
     public function store(DisciplinaRequest $request)
     {
+        Gate::authorize('create', Disciplina::class);
         Disciplina::create($request->validated());
         return redirect()->route('disciplina.index');
     }
@@ -41,6 +46,7 @@ class DisciplinaController extends Controller
     public function show(string $id)
     {
         $disciplina = Disciplina::find($id);
+        Gate::authorize('view', $disciplina);
 
         if(isset($disciplina)) {
             return view('disciplina.show', compact(['disciplina']));
@@ -55,6 +61,7 @@ class DisciplinaController extends Controller
     public function edit(string $id)
     {
         $disciplina = Disciplina::find($id);
+        Gate::authorize('update', $disciplina);
         $cursos = Curso::all();
 
         if(isset($disciplina)) {
@@ -70,6 +77,7 @@ class DisciplinaController extends Controller
     public function update(DisciplinaRequest $request, string $id)
     {
             $disciplina = Disciplina::find($id);
+            Gate::authorize('update', $disciplina);
 
             if(isset($disciplina)) {
                 $disciplina->update($request->validated());
@@ -85,6 +93,7 @@ class DisciplinaController extends Controller
     public function destroy(string $id)
     {
         $disciplina = Disciplina::find($id);
+        Gate::authorize('delete', $disciplina);
 
         if(isset($disciplina)) {
             try {

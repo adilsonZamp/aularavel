@@ -45,24 +45,28 @@
                             <span class="ps-1 text-white">Alunos</span>
                         </a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a href="{{ route('curso.index') }}" class="nav-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF" class="bi bi-easel2-fill" viewBox="0 0 16 16">
-                                <path d="M8.447.276a.5.5 0 0 0-.894 0L7.19 1H2.5A1.5 1.5 0 0 0 1 2.5V10h14V2.5A1.5 1.5 0 0 0 13.5 1H8.809z"/>
-                                <path fill-rule="evenodd" d="M.5 11a.5.5 0 0 0 0 1h2.86l-.845 3.379a.5.5 0 0 0 .97.242L3.89 14h8.22l.405 1.621a.5.5 0 0 0 .97-.242L12.64 12h2.86a.5.5 0 0 0 0-1zm3.64 2 .25-1h7.22l.25 1z"/>
-                            </svg>
-                            <span class="ps-1 text-white">Cursos</span>
-                        </a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a href="{{ route('disciplina.index') }}" class="nav-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF" class="bi bi-stickies-fill" viewBox="0 0 16 16">
-                                <path d="M0 1.5V13a1 1 0 0 0 1 1V1.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 0-1-1H1.5A1.5 1.5 0 0 0 0 1.5"/>
-                                <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v11A1.5 1.5 0 0 0 3.5 16h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 16 9.586V3.5A1.5 1.5 0 0 0 14.5 2zm6 8.5a1 1 0 0 1 1-1h4.396a.25.25 0 0 1 .177.427l-5.146 5.146a.25.25 0 0 1-.427-.177z"/>
-                            </svg>
-                            <span class="ps-1 text-white">Disciplinas</span>
-                        </a>
-                    </li>
+                    @can('viewAny', App\Models\Curso::class)
+                        <li class="nav-item me-2">
+                            <a href="{{ route('curso.index') }}" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF" class="bi bi-easel2-fill" viewBox="0 0 16 16">
+                                    <path d="M8.447.276a.5.5 0 0 0-.894 0L7.19 1H2.5A1.5 1.5 0 0 0 1 2.5V10h14V2.5A1.5 1.5 0 0 0 13.5 1H8.809z"/>
+                                    <path fill-rule="evenodd" d="M.5 11a.5.5 0 0 0 0 1h2.86l-.845 3.379a.5.5 0 0 0 .97.242L3.89 14h8.22l.405 1.621a.5.5 0 0 0 .97-.242L12.64 12h2.86a.5.5 0 0 0 0-1zm3.64 2 .25-1h7.22l.25 1z"/>
+                                </svg>
+                                <span class="ps-1 text-white">Cursos</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('viewAny', App\Models\Disciplina::class)
+                        <li class="nav-item me-2">
+                            <a href="{{ route('disciplina.index') }}" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF" class="bi bi-stickies-fill" viewBox="0 0 16 16">
+                                    <path d="M0 1.5V13a1 1 0 0 0 1 1V1.5a.5.5 0 0 1 .5-.5H14a1 1 0 0 0-1-1H1.5A1.5 1.5 0 0 0 0 1.5"/>
+                                    <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v11A1.5 1.5 0 0 0 3.5 16h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 16 9.586V3.5A1.5 1.5 0 0 0 14.5 2zm6 8.5a1 1 0 0 1 1-1h4.396a.25.25 0 0 1 .177.427l-5.146 5.146a.25.25 0 0 1-.427-.177z"/>
+                                </svg>
+                                <span class="ps-1 text-white">Disciplinas</span>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="nav-item me-2">
                         <a href="{{ route('matricula.index') }}" class="nav-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#FFF" class="bi bi-ui-checks" viewBox="0 0 16 16">
@@ -129,11 +133,13 @@
             </div>
             <div class="col d-flex justify-content-end">
                 @if($rota != '')
-                    <a href= "{{ route($rota) }}" class="btn btn-secondary ms-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                        </svg>
-                    </a>
+                    @can("create", $class)
+                        <a href= "{{ route($rota) }}" class="btn btn-secondary ms-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                            </svg>
+                        </a>
+                    @endcan
                 @endif
             </div>
         </div>
