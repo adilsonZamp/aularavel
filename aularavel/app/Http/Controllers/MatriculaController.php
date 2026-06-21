@@ -6,6 +6,7 @@ use App\Models\Aluno;
 use App\Models\Disciplina;
 use Illuminate\Http\Request;
 use App\Models\Matricula;
+use Illuminate\Support\Facades\Gate;
 
 class MatriculaController extends Controller
 {
@@ -14,6 +15,7 @@ class MatriculaController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Matricula::class);
         $matriculas = Matricula::with(['disciplina', 'aluno'])->get();
         return view('matricula.index', compact(['matriculas']));
     }
@@ -23,6 +25,7 @@ class MatriculaController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Matricula::class);
         $alunos = Aluno::all();
         $disciplinas = Disciplina::all();
 
@@ -34,6 +37,7 @@ class MatriculaController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Matricula::class);
         $matricula = new Matricula();
         $matricula->aluno_id = $request->aluno;
         $matricula->disciplina_id = $request->disciplina;
@@ -97,7 +101,9 @@ class MatriculaController extends Controller
     public function destroy(int $idAluno, int $idDisciplina)
     {
         try {
-            Matricula::where('disciplina_id', $idDisciplina)->where('aluno_id', $idAluno)->delete();
+            $matricula = Matricula::where('disciplina_id', $idDisciplina)->where('aluno_id', $idAluno);
+            Gate::authorize('delete', $matricula);
+            $matricula->delete();
         } catch (\Throwable $th) {
             return redirect()->route('matricula.index');
         }
