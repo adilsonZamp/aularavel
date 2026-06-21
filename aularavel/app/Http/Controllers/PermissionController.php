@@ -11,7 +11,7 @@ class PermissionController extends Controller
 {
     public static function loadPermissions($role) {
         $arr_permissions = Array();
-        $perm = Permission::with(['resource'])->where('role_id', $role)->get();
+        $perm = Permission::with(['resource'])->where(['role_id' => $role])->get();
         foreach($perm as $item) {
             if ($item->permission == 1) {
                 $arr_permissions[$item->resource->name] = true;

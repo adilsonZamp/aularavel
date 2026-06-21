@@ -101,10 +101,16 @@ class MatriculaController extends Controller
     public function destroy(int $idAluno, int $idDisciplina)
     {
         try {
-            $matricula = Matricula::where('disciplina_id', $idDisciplina)->where('aluno_id', $idAluno);
+            $matricula = Matricula::where(['disciplina_id' => $idDisciplina, 'aluno_id' => $idAluno])
+            ->firstOrFail();
             Gate::authorize('delete', $matricula);
+            // Matricula::where(['disciplina_id' => $idDisciplina, 'aluno_id' => $idAluno])
             $matricula->delete();
+            // $matricula->where(['aluno_id' => $matricula->aluno_id, 'disciplina_id' => $matricula->disciplina_id])->delete();
+            // dd(Matricula::where(['disciplina_id' => $idDisciplina, 'aluno_id' => $idAluno]));
+            // ->firstOrFail());
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return redirect()->route('matricula.index');
         }
         return redirect()->route('matricula.index');
