@@ -42,7 +42,7 @@ class PermissionSeeder extends Seeder
             ["role_id" => 1, "resource_id" => 12, "permission" => true],//["name" => "aluno.create"], // 12
             ["role_id" => 1, "resource_id" => 13, "permission" => true],//["name" => "aluno.show"], // 13
             ["role_id" => 1, "resource_id" => 14, "permission" => true],//["name" => "aluno.edit"], // 14
-            ["role_id" => 1, "resource_id" => 15, "permission" => true],//["name" => "aluno.delete"], // 15
+            ["role_id" => 1, "resource_id" => 15, "permission" => false],//["name" => "aluno.delete"], // 15
             // COORDENADOR - MATRICULA
             ["role_id" => 2, "resource_id" => 16, "permission" => true],// "matricula.index"], // 16
             ["role_id" => 2, "resource_id" => 17, "permission" => true],// "matricula.create"], // 17
@@ -56,6 +56,6 @@ class PermissionSeeder extends Seeder
             ["role_id" => 2, "resource_id" => 14, "permission" => false],//["name" => "aluno.edit"], // 14
             ["role_id" => 2, "resource_id" => 15, "permission" => false],//["name" => "aluno.delete"], // 15
         ];
-        DB::table('permissions')->insert($data);
+    DB::table("permissions")->insert($data);
     }
 }

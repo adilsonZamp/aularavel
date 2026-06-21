@@ -13,7 +13,7 @@ class CursoController extends Controller
      */
     public function index() {
         Gate::authorize('viewAny', Curso::class);
-        $data = Curso::with(['disciplina', 'aluno'])->orderBy('nome')->get();
+        $data = Curso::with(['disciplina', 'aluno'])->orderBy(['nome'])->get();
         return view('curso.index', compact(['data']));
     }
 
